@@ -2,11 +2,15 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -19,14 +23,23 @@ public class AppFrame extends JFrame {
 	public static final String[] names =
 		{ "Insertion" };
 	
-	JPanel containerPanel, choicePanel, arrayPanel;
-	JLabel titleLabel, choiceLabel, timeLabel;
+	JPanel containerPanel, choicePanel, arrayCtrlPanel;
+	JLabel titleLabel, choiceLabel, statusLabel;
 	JTextArea outputArea;
 	JComboBox<String> choiceBox;
-	JButton sortButton;
+	JButton sortButton, addButton, removeButton;
+	JList<String> arrayList;
+	DefaultListModel<String> dlm;
+	
+	ArrayList<Integer> array;
+	
+	long time = 0;
 	
 	public AppFrame() {
 		super("Sorting");
+		
+		//array
+		array = new ArrayList<>();
 		
 		//title
 		titleLabel = new JLabel("Array Sorting");
@@ -43,7 +56,7 @@ public class AppFrame extends JFrame {
 		
 		//choice
 		choicePanel = new JPanel();
-		containerPanel.add(choicePanel);
+		containerPanel.add(choicePanel, BorderLayout.NORTH);
 		
 		choiceLabel = new JLabel("Choose your algorithm:");
 		choicePanel.add(choiceLabel);
@@ -56,6 +69,31 @@ public class AppFrame extends JFrame {
 		//sort button
 		sortButton = new JButton("Sort");
 		sortButton.addActionListener(handler);
+		choicePanel.add(sortButton);
+		
+		//output area
+//		outputArea = new JTextArea();
+//		outputArea.setEditable(false);
+//		containerPanel.add(outputArea);
+		arrayList = new JList<>();
+		arrayList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		arrayList.setVisibleRowCount(1);
+		containerPanel.add(arrayList);
+		dlm = new DefaultListModel<>();
+		arrayList.setModel(dlm);			
+		
+		//array control panel
+		arrayCtrlPanel = new JPanel();
+		this.add(arrayCtrlPanel, BorderLayout.SOUTH);
+		
+		//add and remove buttons
+		addButton = new JButton("Add New Element");
+		addButton.addActionListener(handler);
+		arrayCtrlPanel.add(addButton);
+		
+		removeButton = new JButton("Remove Element");
+		removeButton.addActionListener(handler);
+		arrayCtrlPanel.add(removeButton);
 		
 	}
 	
@@ -68,8 +106,57 @@ public class AppFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			if(event.getSource() == sortButton) {
-				//
+				if(array.size() == 0) {
+					JOptionPane.showMessageDialog(AppFrame.this, "You don't have any elements!", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				int[] toSort = new int[array.size()];
+				for(int i = 0 ; i < toSort.length; i++)
+					toSort[i] = array.get(i);
+				//System.out.println(choiceBox.getSelectedIndex());
+				switch(choiceBox.getSelectedIndex()) {
+				case INSERTION: time = InsertionSort.sort(toSort); break;
+					default: time = -1;
+				}
+				if(time >= 0) {
+					array.removeAll(array);
+					dlm.removeAllElements();
+					for(int i = 0; i < toSort.length; i++) {
+						array.add(toSort[i]);
+						dlm.addElement(String.format("(%d)", toSort[i]));
+					}
+					JOptionPane.showMessageDialog(AppFrame.this, String.format("%s%dms!", "Array sorted! Execution time: ", time));
+				}
 				
+			}
+			else if(event.getSource() == addButton) {
+				Integer input;
+				do {
+					String inputText = JOptionPane.showInputDialog("Enter the value:");
+					if(inputText == null || inputText.equals(""))
+						return;
+					try {
+						input = Integer.parseInt(inputText);
+						break;
+					}
+					catch(NumberFormatException exception) {
+						JOptionPane.showMessageDialog(AppFrame.this, "Invalid input! Try again!", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} while (true);
+				array.add(input);
+				dlm.addElement(String.format("(%d)", input.intValue()));
+			}
+			else if(event.getSource() == removeButton) {
+				int selectedIndex = arrayList.getSelectedIndex();
+				if(selectedIndex < 0) {
+					JOptionPane.showMessageDialog(AppFrame.this, "You don't have any item selected!", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				int input = JOptionPane.showConfirmDialog(AppFrame.this, "Are you sure you want to remove this element?", "Remove", JOptionPane.YES_NO_OPTION);
+				if(input != JOptionPane.YES_OPTION)
+					return;
+				dlm.remove(selectedIndex);
+				array.remove(selectedIndex);
 			}
 		}
 	}

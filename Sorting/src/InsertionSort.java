@@ -1,7 +1,8 @@
 
 public class InsertionSort {
-	static public void sort(int[] array) {
+	static public long sort(int[] array) {
 		int i, j, k, temp;
+		long beforeTime = System.currentTimeMillis();
 		for(i = 0; i < array.length; i++) {
 			for(j = i; j < array.length; j++) {
 				k = j - 1;
@@ -16,5 +17,6 @@ public class InsertionSort {
 				}
 			}
 		}
+		return System.currentTimeMillis() - beforeTime;
 	}
 }
