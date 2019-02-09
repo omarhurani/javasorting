@@ -2,7 +2,9 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -12,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class AppFrame extends JFrame {
@@ -25,10 +28,11 @@ public class AppFrame extends JFrame {
 		{ "Insertion" , "Merge" };
 	
 	JPanel containerPanel, choicePanel, arrayCtrlPanel;
+	JScrollPane listScroller;
 	JLabel titleLabel, choiceLabel, statusLabel;
 	JTextArea outputArea;
 	JComboBox<String> choiceBox;
-	JButton sortButton, addButton, removeButton;
+	JButton sortButton, addButton, removeButton, randomArrayButton;
 	JList<String> arrayList;
 	DefaultListModel<String> dlm;
 	
@@ -77,9 +81,10 @@ public class AppFrame extends JFrame {
 //		outputArea.setEditable(false);
 //		containerPanel.add(outputArea);
 		arrayList = new JList<>();
-		arrayList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		arrayList.setVisibleRowCount(1);
-		containerPanel.add(arrayList);
+//		arrayList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+//		arrayList.setVisibleRowCount(-1);
+		listScroller = new JScrollPane(arrayList);
+		containerPanel.add(listScroller);
 		dlm = new DefaultListModel<>();
 		arrayList.setModel(dlm);			
 		
@@ -96,11 +101,15 @@ public class AppFrame extends JFrame {
 		removeButton.addActionListener(handler);
 		arrayCtrlPanel.add(removeButton);
 		
+		//random array button
+		randomArrayButton = new JButton("Generate Random Array");
+		randomArrayButton.addActionListener(handler);
+		arrayCtrlPanel.add(randomArrayButton);
 	}
 	
 	public void activate() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(400,400);
+		this.setSize(500,400);
 		this.setVisible(true);
 	}
 	class AppHandler implements ActionListener{
@@ -127,7 +136,7 @@ public class AppFrame extends JFrame {
 						array.add(toSort[i]);
 						dlm.addElement(String.format("(%d)", toSort[i]));
 					}
-					JOptionPane.showMessageDialog(AppFrame.this, String.format("%s%dms!", "Array sorted! Execution time: ", time));
+					JOptionPane.showMessageDialog(AppFrame.this, String.format("%s%sns!", "Array sorted! Execution time: ", NumberFormat.getInstance().format(time)));
 				}
 				
 			}
@@ -159,6 +168,44 @@ public class AppFrame extends JFrame {
 					return;
 				dlm.remove(selectedIndex);
 				array.remove(selectedIndex);
+			}
+			else if(event.getSource() == randomArrayButton) {
+				String inputString;
+				int input;
+				do {
+					inputString = JOptionPane.showInputDialog("Enter the size of the array!");
+					try {
+						if(inputString == null || inputString.equals(""))
+							return;
+						input = Integer.parseInt(inputString.trim());
+						if(input <= 0)
+							JOptionPane.showMessageDialog(AppFrame.this, "Size should be positive!", "Error", JOptionPane.ERROR_MESSAGE);
+						else
+							break;
+					}
+					catch(NumberFormatException exception) {
+						JOptionPane.showMessageDialog(AppFrame.this, "Invalid input! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} while(true);
+				
+				if(array.size() != 0) {
+					int check = JOptionPane.showConfirmDialog(AppFrame.this, "Doing this will remove previously entered data. Are you sure you want to proceed?", "Random", JOptionPane.YES_NO_OPTION);
+					if(check != JOptionPane.YES_OPTION)
+						return;
+				}
+				
+				array.removeAll(array);
+				dlm.removeAllElements();
+				int value;
+				Random randomGenerator = new Random();
+				for(int i = 0; i < input; i++) {
+					value = randomGenerator.nextInt(Integer.MAX_VALUE);
+					array.add(value);
+					dlm.addElement(String.format("(%d)", value));
+					
+				}
+				
+				JOptionPane.showMessageDialog(AppFrame.this, String.format("%s%d%s", "Generated an array of ", input, " elements successfully!"),"Sucess",JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}

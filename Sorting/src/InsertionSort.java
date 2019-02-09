@@ -2,7 +2,7 @@
 public class InsertionSort {
 	static public long sort(int[] array) {
 		int i, j, k, temp;
-		long beforeTime = System.currentTimeMillis();
+		long beforeTime = System.nanoTime();
 		for(i = 0; i < array.length; i++) {
 			for(j = i; j < array.length; j++) {
 				k = j - 1;
@@ -17,6 +17,6 @@ public class InsertionSort {
 				}
 			}
 		}
-		return System.currentTimeMillis() - beforeTime;
+		return System.nanoTime() - beforeTime;
 	}
 }
