@@ -31,6 +31,7 @@ public class MergeSort {
 				array[i] = leftarray[leftindex];
 				leftindex++;
 			}
+			
 			else {
 				array[i] = rightarray[rightindex];
 				rightindex++;
