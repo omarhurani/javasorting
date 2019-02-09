@@ -18,10 +18,11 @@ public class AppFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	public static final int
-	INSERTION = 0
+	INSERTION = 0,
+	MERGE = 1
 			;
 	public static final String[] names =
-		{ "Insertion" };
+		{ "Insertion" , "Merge" };
 	
 	JPanel containerPanel, choicePanel, arrayCtrlPanel;
 	JLabel titleLabel, choiceLabel, statusLabel;
@@ -116,6 +117,7 @@ public class AppFrame extends JFrame {
 				//System.out.println(choiceBox.getSelectedIndex());
 				switch(choiceBox.getSelectedIndex()) {
 				case INSERTION: time = InsertionSort.sort(toSort); break;
+				case MERGE: time = MergeSort.sort(toSort); break;
 					default: time = -1;
 				}
 				if(time >= 0) {
