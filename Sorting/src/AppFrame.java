@@ -71,7 +71,7 @@ public class AppFrame extends JFrame {
 		sortButton.addActionListener(handler);
 		choicePanel.add(sortButton);
 		
-		//output area
+		//list
 //		outputArea = new JTextArea();
 //		outputArea.setEditable(false);
 //		containerPanel.add(outputArea);
