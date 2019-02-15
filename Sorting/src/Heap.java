@@ -12,7 +12,7 @@ public class Heap {
 		buildHeap();
 	}
 	private void heapify(int index) {
-		heapify(array, index);
+		heapify(array, index, array.length);
 	}
 	private void buildHeap() {
 		for(int i = array.length/2; i >= 0; i--)
@@ -23,10 +23,10 @@ public class Heap {
 		h.buildHeap();
 		return h;
 	}
-	static public void heapify(int[] array, int index) {
+	static public void heapify(int[] array, int index, int size) {
 		int 
-			leftindex = getLeftIndex(array, index),
-			rightindex = getRightIndex(array, index);
+			leftindex = getLeftIndex(array, index, size),
+			rightindex = getRightIndex(array, index, size);
 		int maxindex = index;
 		if(leftindex != -1 && array[leftindex] > array[maxindex])
 			maxindex = leftindex;
@@ -36,7 +36,7 @@ public class Heap {
 			int temp = array[index];
 			array[index] = array[maxindex];
 			array[maxindex] = temp;
-			heapify(array, maxindex);
+			heapify(array, maxindex, size);
 		}
 	}
 	static public void makeHeap(int[] array) {
@@ -44,9 +44,9 @@ public class Heap {
 		h.buildHeap();
 	}
 	public int getLeftIndex(int index) {
-		return getLeftIndex(array, index);
+		return getLeftIndex(array, index, array.length);
 	}
-	static public int getLeftIndex(int[] array, int index) {
+	static public int getLeftIndex(int[] array, int index, int size) {
 		if(index < 0 || index >= array.length)
 			throw new ArrayIndexOutOfBoundsException();
 		int toReturn = index*2;
@@ -54,9 +54,9 @@ public class Heap {
 		else return toReturn;
 	}
 	public int getRightIndex(int index) {
-		return getRightIndex(array, index);
+		return getRightIndex(array, index, array.length);
 	}
-	static public int getRightIndex(int[] array, int index) {
+	static public int getRightIndex(int[] array, int index, int size) {
 		if(index < 0 || index >= array.length)
 			throw new ArrayIndexOutOfBoundsException();
 		int toReturn = index*2;
