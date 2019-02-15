@@ -47,20 +47,20 @@ public class Heap {
 		return getLeftIndex(array, index, array.length);
 	}
 	static public int getLeftIndex(int[] array, int index, int size) {
-		if(index < 0 || index >= array.length)
+		if(index < 0 || index >= size)
 			throw new ArrayIndexOutOfBoundsException();
 		int toReturn = index*2;
-		if(toReturn >= array.length) return -1;
+		if(toReturn >= size) return -1;
 		else return toReturn;
 	}
 	public int getRightIndex(int index) {
 		return getRightIndex(array, index, array.length);
 	}
 	static public int getRightIndex(int[] array, int index, int size) {
-		if(index < 0 || index >= array.length)
+		if(index < 0 || index >= size)
 			throw new ArrayIndexOutOfBoundsException();
 		int toReturn = index*2;
-		if(++toReturn >= array.length) return -1;
+		if(++toReturn >= size) return -1;
 		else return toReturn;
 	}
 	public int get(int index) {
