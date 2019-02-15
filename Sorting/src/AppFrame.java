@@ -34,7 +34,7 @@ public class AppFrame extends JFrame {
 	JLabel titleLabel, choiceLabel, statusLabel;
 	JTextArea outputArea;
 	JComboBox<String> choiceBox;
-	JButton sortButton, addButton, removeButton, randomArrayButton;
+	JButton sortButton, addButton, removeButton, randomArrayButton, clearButton;
 	JList<String> arrayList;
 	DefaultListModel<String> dlm;
 	
@@ -103,6 +103,11 @@ public class AppFrame extends JFrame {
 		removeButton.addActionListener(handler);
 		arrayCtrlPanel.add(removeButton);
 		
+		//clear button
+		clearButton = new JButton("Clear Array");
+		clearButton.addActionListener(handler);
+		arrayCtrlPanel.add(clearButton);
+		
 		//random array button
 		randomArrayButton = new JButton("Generate Random Array");
 		randomArrayButton.addActionListener(handler);
@@ -111,7 +116,7 @@ public class AppFrame extends JFrame {
 	
 	public void activate() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(500,400);
+		this.setSize(600,400);
 		this.setVisible(true);
 	}
 	class AppHandler implements ActionListener{
@@ -172,6 +177,18 @@ public class AppFrame extends JFrame {
 					return;
 				dlm.remove(selectedIndex);
 				array.remove(selectedIndex);
+			}
+			else if(event.getSource() == clearButton) {
+				if(array.isEmpty()) {
+					JOptionPane.showMessageDialog(AppFrame.this, "Array is already empty!", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				int input = JOptionPane.showConfirmDialog(AppFrame.this, "Are you sure you want to clear the array? This operation is irreversable.", "Remove", JOptionPane.YES_NO_OPTION);
+				if(input != JOptionPane.YES_OPTION)
+					return;
+				array.removeAll(array);
+				dlm.removeAllElements();
+				JOptionPane.showMessageDialog(AppFrame.this, "Array cleared!", "Clear", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if(event.getSource() == randomArrayButton) {
 				String inputString;
