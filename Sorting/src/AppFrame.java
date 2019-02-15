@@ -23,10 +23,11 @@ public class AppFrame extends JFrame {
 	public static final int
 	INSERTION = 0,
 	MERGE = 1,
-	QUICK = 2
+	QUICK = 2,
+	HEAP = 3
 			;
 	public static final String[] names =
-		{ "Insertion" , "Merge" , "Quick" };
+		{ "Insertion" , "Merge" , "Quick" , "Heap" };
 	
 	JPanel containerPanel, choicePanel, arrayCtrlPanel;
 	JScrollPane listScroller;
@@ -129,6 +130,7 @@ public class AppFrame extends JFrame {
 				case INSERTION: time = InsertionSort.sort(toSort); break;
 				case MERGE: time = MergeSort.sort(toSort); break;
 				case QUICK: time = QuickSort.sort(toSort); break;
+				case HEAP: time = HeapSort.sort(toSort); break;
 					default: time = -1;
 				}
 				if(time >= 0) {
