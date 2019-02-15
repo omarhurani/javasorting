@@ -9,7 +9,7 @@ public class QuickSort {
 	private static void sort(int[] array, int startIndex, int endIndex) {
 		if(endIndex - startIndex <= 0)
 			return;
-		int pivotIndex = new Random().nextInt(endIndex-startIndex+1);
+		int pivotIndex = new Random().nextInt(endIndex-startIndex+1)+startIndex;
 		
 		//partitioning
 		
@@ -22,7 +22,7 @@ public class QuickSort {
 		}
 		cursor = pivotIndex + 1; //mark cursor directly after pivot
 		pivot = array[pivotIndex]; //store pivot value
-		while(cursor < endIndex) {
+		while(cursor <= endIndex) {
 			if(array[cursor] < pivot) { //if element is less put it near the pivot
 				pivotIndex++;
 				temp = array[pivotIndex];
@@ -31,7 +31,7 @@ public class QuickSort {
 			}
 			cursor++;
 		}
-		//replace the pivot with one of the small elements to put it in place
+		//replace the pivot with the last small element to put it in place
 		temp = array[startIndex];
 		array[startIndex] = array[pivotIndex];
 		array[pivotIndex] = temp;

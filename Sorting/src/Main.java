@@ -15,10 +15,12 @@ public class Main {
 	
 	public static void main(String[] args) {
 //		int[] x = {5,8,6,1,2,9,3};
-//		InsertionSort.sort(x);
+//		QuickSort.sort(x);
 //		System.out.println(arrayToString(x));
 		
 		AppFrame f = new AppFrame();
 		f.activate();
+		
+		
 	}
 }
