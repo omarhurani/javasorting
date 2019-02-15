@@ -22,10 +22,11 @@ public class AppFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public static final int
 	INSERTION = 0,
-	MERGE = 1
+	MERGE = 1,
+	QUICK = 2
 			;
 	public static final String[] names =
-		{ "Insertion" , "Merge" };
+		{ "Insertion" , "Merge" , "Quick" };
 	
 	JPanel containerPanel, choicePanel, arrayCtrlPanel;
 	JScrollPane listScroller;
@@ -127,6 +128,7 @@ public class AppFrame extends JFrame {
 				switch(choiceBox.getSelectedIndex()) {
 				case INSERTION: time = InsertionSort.sort(toSort); break;
 				case MERGE: time = MergeSort.sort(toSort); break;
+				case QUICK: time = QuickSort.sort(toSort); break;
 					default: time = -1;
 				}
 				if(time >= 0) {
