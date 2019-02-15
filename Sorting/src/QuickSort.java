@@ -7,7 +7,7 @@ public class QuickSort {
 		return System.nanoTime()-beforeTime;
 	}
 	private static void sort(int[] array, int startIndex, int endIndex) {
-		if(startIndex - endIndex <= 0)
+		if(endIndex - startIndex <= 0)
 			return;
 		int pivotIndex = new Random().nextInt(endIndex-startIndex+1);
 		
