@@ -9,7 +9,7 @@ public class QuickSort {
 	private static void sort(int[] array, int startIndex, int endIndex) {
 		if(endIndex - startIndex <= 0)
 			return;
-		int pivotIndex = new Random().nextInt(endIndex-startIndex+1)+startIndex;
+		int pivotIndex = new Random().nextInt(endIndex-startIndex+1)+startIndex; //choose random pivot
 		
 		//partitioning
 		
