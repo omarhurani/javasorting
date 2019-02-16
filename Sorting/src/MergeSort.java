@@ -1,7 +1,6 @@
 
 public class MergeSort {
 	public static long sort(int[] array) {
-		//System.out.println(array.length);
 		long beforeTime = System.nanoTime();
 		if(array.length == 1)
 			return System.currentTimeMillis() - beforeTime;
@@ -13,8 +12,6 @@ public class MergeSort {
 		int[] rightarray = new int[rightlength];
 		for(int i = 0; i < rightlength; i++)
 			rightarray[i] = array[i+leftlength];
-//		leftarray = sortArray(leftarray);
-//		rightarray = sortArray(rightarray);
 		sort(leftarray);
 		sort(rightarray);
 		int leftindex = 0, rightindex = 0;
