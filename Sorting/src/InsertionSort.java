@@ -4,8 +4,8 @@ public class InsertionSort {
 		int i, j, k, temp;
 		long beforeTime = System.nanoTime();
 		for(i = 0; i < array.length; i++) {
-			for(j = i; j < array.length; j++) {
-				k = j - 1;
+			//for(j = i; j < array.length; j++) {
+				k = i - 1;
 				while(k >=0) {
 					if(array[k] > array[k+1]) {
 						temp = array[k];
@@ -15,7 +15,7 @@ public class InsertionSort {
 					}
 					else break;
 				}
-			}
+			//}
 		}
 		return System.nanoTime() - beforeTime;
 	}
