@@ -24,10 +24,11 @@ public class AppFrame extends JFrame {
 	INSERTION = 0,
 	MERGE = 1,
 	QUICK = 2,
-	HEAP = 3
+	HEAP = 3,
+	COUNTING = 4
 			;
 	public static final String[] names =
-		{ "Insertion" , "Merge" , "Quick" , "Heap" };
+		{ "Insertion" , "Merge" , "Quick" , "Heap" , "Counting" };
 	
 	JPanel containerPanel, choicePanel, arrayCtrlPanel;
 	JScrollPane listScroller;
@@ -136,6 +137,16 @@ public class AppFrame extends JFrame {
 				case MERGE: time = MergeSort.sort(toSort); break;
 				case QUICK: time = QuickSort.sort(toSort); break;
 				case HEAP: time = HeapSort.sort(toSort); break;
+				case COUNTING: {
+					try {
+						time = CountingSort.sort(toSort); break;
+					}
+					catch(Error error) {
+						JOptionPane.showMessageDialog(AppFrame.this, "Data range too large!", "Error", JOptionPane.ERROR_MESSAGE);
+						System.gc();
+						time = -1;
+					}
+				}
 					default: time = -1;
 				}
 				if(time >= 0) {
