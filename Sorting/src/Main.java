@@ -15,7 +15,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 //		int[] x =  {4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
-//		HeapSort.sort(x);
+//		CountingSort.sort(x);
 //		System.out.println(arrayToString(x));
 		
 		AppFrame f = new AppFrame();
